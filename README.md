@@ -13,9 +13,13 @@ index.html          1枚もの。Hero / About / News / Clubs / Access / Contact
 assets/style.css    スタイル
 assets/main.js      ローディング演出・ナビ・NEWS絞り込み・画像差し替え
 images/             写真（images/README.md に入れ方を記載）
-CNAME               カスタムドメイン設定（GitHub Pages が読む）
 .nojekyll           Jekyll のビルドを無効化
 ```
+
+> `CNAME` は現在**置いていません**。独自ドメインが未取得のうちにこのファイルがあると、
+> GitHub Pages がそちらを正としてしまい、`github.io` の共有URLが
+> 存在しないドメインへリダイレクトして開けなくなるためです。
+> ドメイン取得・DNS設定が済んだら「デプロイ」の項を参照して戻してください。
 
 ## ローカルで見る
 
@@ -140,20 +144,40 @@ hagiso.com の解析仕様書をもとに、**設計原理だけ**を転用し�
 
 ---
 
-## ドメインの更新について
+## デプロイ
 
-姉妹スペース Project Space hazi の旧サイト `hazi.work` は、ドメインが失効して
-第三者のパーキングページに置き換わっています。同じことが起きないよう、
-**自動更新をオンにし、更新通知の届くメールアドレスを複数人が見られる状態**に
-しておくことを強くおすすめします。
-
-## デプロイ（未実施）
-
-GitHub Organization `banana-iwakura` の作成待ちです。作成後：
+### 1. 共有用に公開する（ドメイン取得前）
 
 ```bash
 gh repo create banana-iwakura/banana-iwakura --public --source=. --push
+gh api -X POST repos/banana-iwakura/banana-iwakura/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'
 ```
 
-その後 Settings → Pages で `main` / `root` を指定し、Custom domain に `banana-iwakura.com` を設定、
-Enforce HTTPS をオンにしてください。DNSレコードは別途共有済みのものを使います。
+公開URLは `https://banana-iwakura.github.io/banana-iwakura/` になります。
+反映まで1〜2分かかります。
+
+### 2. 独自ドメインに切り替える（ドメイン取得後）
+
+`banana-iwakura.com` を取得し、DNSに以下を設定してから作業してください。
+
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153` / `8001::153` / `8002::153` / `8003::153` |
+| CNAME | `www` | `banana-iwakura.github.io.` |
+
+※ Cloudflare を使う場合はプロキシ（オレンジ雲）を**オフ＝DNS only** に。オンだと証明書発行が通りません。
+
+DNSが引けるようになったら：
+
+```bash
+echo "banana-iwakura.com" > CNAME
+git add CNAME && git commit -m "独自ドメインを有効化" && git push
+gh api -X PUT repos/banana-iwakura/banana-iwakura/pages \
+  -f cname=banana-iwakura.com -F https_enforced=true
+```
+
+**ドメインの更新管理**：姉妹スペース Project Space hazi の旧サイト `hazi.work` は、
+ドメインが失効して第三者のパーキングページに置き換わっています。同じことが起きないよう、
+自動更新をオンにし、更新通知の届くメールアドレスを複数人が見られる状態にしてください。
