@@ -3,7 +3,8 @@
 愛知県岩倉市のアートスペース「場七 / Banana」の公式サイト。
 ビルド不要の静的HTML（フレームワーク・依存パッケージなし）で、GitHub Pages にホスティングします。
 
-- 本番: https://banana-iwakura.com
+- 公開中（共有用）: https://sugiyama-yoshihiko.github.io/banana-iwakura/
+- 本番予定: https://banana-iwakura.com （ドメイン未取得）
 - Instagram: https://www.instagram.com/banana_iwakura/
 
 ## 構成
@@ -149,13 +150,10 @@ hagiso.com の解析仕様書をもとに、**設計原理だけ**を転用し�
 ### 1. 共有用に公開する（ドメイン取得前）
 
 ```bash
-gh repo create banana-iwakura/banana-iwakura --public --source=. --push
-gh api -X POST repos/banana-iwakura/banana-iwakura/pages \
-  -f 'source[branch]=main' -f 'source[path]=/'
+# 実施済み（sugiyama-yoshihiko/banana-iwakura）
 ```
 
-公開URLは `https://banana-iwakura.github.io/banana-iwakura/` になります。
-反映まで1〜2分かかります。
+公開URL：https://sugiyama-yoshihiko.github.io/banana-iwakura/
 
 ### 2. 独自ドメインに切り替える（ドメイン取得後）
 
@@ -165,16 +163,19 @@ gh api -X POST repos/banana-iwakura/banana-iwakura/pages \
 |---|---|---|
 | A | `@` | `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153` |
 | AAAA | `@` | `2606:50c0:8000::153` / `8001::153` / `8002::153` / `8003::153` |
-| CNAME | `www` | `banana-iwakura.github.io.` |
+| CNAME | `www` | `sugiyama-yoshihiko.github.io.` |
 
 ※ Cloudflare を使う場合はプロキシ（オレンジ雲）を**オフ＝DNS only** に。オンだと証明書発行が通りません。
 
 DNSが引けるようになったら：
 
+`index.html` の `canonical` と `og:url` / `og:image` も
+`https://banana-iwakura.com/` に戻してください（現在は github.io を指しています）。
+
 ```bash
 echo "banana-iwakura.com" > CNAME
 git add CNAME && git commit -m "独自ドメインを有効化" && git push
-gh api -X PUT repos/banana-iwakura/banana-iwakura/pages \
+gh api -X PUT repos/sugiyama-yoshihiko/banana-iwakura/pages \
   -f cname=banana-iwakura.com -F https_enforced=true
 ```
 
