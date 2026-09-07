@@ -1,60 +1,235 @@
 (function () {
   'use strict';
 
-  /* --- header: transparent over hero, solid after --- */
-  var header = document.getElementById('siteHeader');
-  var hero = document.querySelector('.hero');
+  var EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (header && hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      header.classList.toggle('is-solid', !entries[0].isIntersecting);
-    }, { rootMargin: '-70px 0px 0px 0px' }).observe(hero);
-  } else if (header) {
-    header.classList.add('is-solid');
+  /* ============================================================
+     ローディング：ロゴを線で描く → 消す → カーテンが開く
+     初回のみ（sessionStorage で判定）
+     ============================================================ */
+  var loading = document.getElementById('loading');
+  var bodyBg = document.querySelector('.body-bg');
+  var header = document.getElementById('header');
+
+  function revealSite(delay) {
+    // カーテンを左から順に開く
+    var panels = bodyBg ? bodyBg.querySelectorAll('span') : [];
+    panels.forEach(function (p, i) {
+      p.style.transition = 'transform .75s ' + EASE;
+      setTimeout(function () { p.style.transform = 'translateX(-101%)'; }, delay + i * 60);
+    });
+    setTimeout(function () {
+      if (bodyBg) bodyBg.classList.add('is-done');
+    }, delay + 900);
+
+    // サイドバーを滑り込ませる
+    setTimeout(function () {
+      if (header) {
+        header.style.transition = 'transform .8s ' + EASE;
+        header.classList.add('is-in');
+      }
+    }, delay + 120);
   }
 
-  /* --- mobile nav --- */
+  function hideLoading() {
+    if (!loading) return;
+    loading.style.transition = 'opacity 1s ' + EASE;
+    loading.style.opacity = '0';
+    setTimeout(function () { loading.classList.add('is-hidden'); }, 1000);
+  }
+
+  function runLoading() {
+    var paths = loading ? loading.querySelectorAll('.lp') : [];
+    var seen = false;
+    try { seen = sessionStorage.getItem('bananaVisited') === '1'; } catch (e) { seen = false; }
+
+    // 2回目以降 / モーション低減設定 → 即表示
+    if (seen || reduceMotion || !paths.length) {
+      hideLoading();
+      revealSite(0);
+      if (!header) return;
+      return;
+    }
+
+    try { sessionStorage.setItem('bananaVisited', '1'); } catch (e) {}
+
+    // 各パスに dasharray/offset を仕込む
+    var lens = [];
+    paths.forEach(function (p) {
+      var len = 0;
+      try { len = p.getTotalLength(); } catch (e) { len = 400; }
+      lens.push(len);
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+    });
+
+    // 1) 描く
+    paths.forEach(function (p, i) {
+      setTimeout(function () {
+        p.style.transition = 'stroke-dashoffset .55s ' + EASE;
+        p.style.strokeDashoffset = '0';
+      }, 100 + i * 55);
+    });
+
+    // 2) 消す
+    var eraseStart = 100 + paths.length * 55 + 300;
+    paths.forEach(function (p, i) {
+      setTimeout(function () {
+        p.style.transition = 'stroke-dashoffset .5s ' + EASE;
+        p.style.strokeDashoffset = -lens[i];
+      }, eraseStart + i * 45);
+    });
+
+    // 3) ローディングを畳んで、サイトを開く
+    var done = eraseStart + paths.length * 45 + 320;
+    setTimeout(hideLoading, done);
+    revealSite(done + 200);
+  }
+
+  /* 起動。
+     window.load は地図iframeなどに引きずられて数秒遅れることがあるため待たない。
+     DOMが使える時点で .preload を外し、次のフレームで演出を始める。
+     （.preload は transition を止めているので、外す前に始めると演出が飛ぶ） */
+  var started = false;
+  function boot() {
+    if (started) return;
+    started = true;
+    document.body.classList.remove('preload');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(runLoading);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  setTimeout(boot, 800); // 保険
+
+  /* ============================================================
+     ヘッダーロゴのホバー：線を消して描き直す
+     ============================================================ */
+  var logo = document.querySelector('.js-logo');
+  if (logo && window.matchMedia('(any-hover: hover)').matches && !reduceMotion) {
+    var lpaths = logo.querySelectorAll('.lp');
+    var busy = false;
+    logo.addEventListener('mouseenter', function () {
+      if (busy) return;
+      busy = true;
+      lpaths.forEach(function (p, i) {
+        var len;
+        try { len = p.getTotalLength(); } catch (e) { len = 400; }
+        p.style.strokeDasharray = len;
+        setTimeout(function () {
+          p.style.transition = 'stroke-dashoffset .5s ' + EASE;
+          p.style.strokeDashoffset = -len;
+        }, i * 60);
+        setTimeout(function () {
+          p.style.strokeDashoffset = '0';
+        }, 420 + i * 60);
+      });
+      setTimeout(function () { busy = false; }, 1200);
+    });
+  }
+
+  /* ============================================================
+     モバイルメニュー
+     ============================================================ */
   var toggle = document.getElementById('navToggle');
-  var nav = document.querySelector('.site-header__nav');
+  var menuMobile = document.getElementById('menuMobile');
 
-  function closeNav() {
-    if (!nav) return;
-    nav.classList.remove('is-open');
-    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  function closeMenu() {
+    if (!menuMobile) return;
+    menuMobile.classList.remove('is-open');
+    if (header) header.classList.remove('is-open');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'メニューを開く');
+      var t = toggle.querySelector('.header-button_text');
+      if (t) t.textContent = 'MENU';
+    }
   }
 
-  if (toggle && nav) {
+  if (toggle && menuMobile) {
     toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
+      var open = menuMobile.classList.toggle('is-open');
+      if (header) header.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+      var t = toggle.querySelector('.header-button_text');
+      if (t) t.textContent = open ? 'CLOSE' : 'MENU';
     });
-    nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') closeNav();
+    menuMobile.addEventListener('click', function (e) {
+      if (e.target.closest('a')) closeMenu();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeNav();
+      if (e.key === 'Escape') closeMenu();
     });
   }
 
-  /* --- scroll reveal --- */
-  var targets = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
+  /* ============================================================
+     現在地のハイライト（サイドバー / 下部バー共通）
+     ============================================================ */
+  var navLinks = document.querySelectorAll('.menu-item[href^="#"], .navigation-item[href^="#"]');
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var map = {};
+    navLinks.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      if (!map[id]) map[id] = [];
+      map[id].push(a);
+    });
+    var ids = Object.keys(map);
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        io.unobserve(entry.target);
+        navLinks.forEach(function (a) { a.classList.remove('is-current'); });
+        (map[entry.target.id] || []).forEach(function (a) { a.classList.add('is-current'); });
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
-    targets.forEach(function (el) { io.observe(el); });
-  } else {
-    targets.forEach(function (el) { el.classList.add('is-in'); });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
   }
 
-  /* --- swap in real images when the file exists ---
-     Elements carry data-img="images/foo.jpg". If the file is missing
-     (not committed yet) the placeholder stays visible. --- */
+  /* ============================================================
+     NEWS のタグ絞り込み
+     ============================================================ */
+  var pills = document.querySelectorAll('.filter-pill');
+  var cards = document.querySelectorAll('#newsList .card');
+  var emptyMsg = document.getElementById('newsEmpty');
+
+  function applyFilter(tag) {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var tags = (c.getAttribute('data-tags') || '').split(/\s+/);
+      var hit = tag === 'all' || tags.indexOf(tag) !== -1;
+      c.classList.toggle('is-hidden', !hit);
+      if (hit) shown++;
+    });
+    pills.forEach(function (p) {
+      p.classList.toggle('is-active', p.getAttribute('data-filter') === tag);
+    });
+    if (emptyMsg) emptyMsg.hidden = shown !== 0;
+  }
+
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      applyFilter(p.getAttribute('data-filter'));
+    });
+  });
+
+  // トップのタグをクリック → NEWS へ飛んで絞り込む
+  document.querySelectorAll('#heroTags a[data-tag]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      applyFilter(a.getAttribute('data-tag'));
+    });
+  });
+
+  /* ============================================================
+     写真が置かれたら差し替える（無ければプレースホルダのまま）
+     ============================================================ */
   document.querySelectorAll('[data-img]').forEach(function (el) {
     var src = el.getAttribute('data-img');
     if (!src) return;
@@ -62,8 +237,6 @@
     probe.onload = function () {
       el.style.backgroundImage = 'url("' + src + '")';
       el.classList.add('has-img');
-      var ph = el.querySelector('.hero__placeholder');
-      if (ph) ph.remove();
     };
     probe.src = src;
   });

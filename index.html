@@ -20,8 +20,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=5">
 
 <script type="application/ld+json">
 {
@@ -44,182 +44,428 @@
 }
 </script>
 </head>
-<body>
+<body class="preload">
 
 <a class="skip" href="#about">本文へスキップ</a>
 
-<header class="site-header" id="siteHeader">
-  <a class="site-header__logo" href="#top">場七<span>Banana</span></a>
-  <nav class="site-header__nav">
-    <a href="#about">About</a>
-    <a href="#clubs">部活</a>
-    <a href="#access">Access</a>
-    <a href="#contact">Contact</a>
-    <a class="is-ext" href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram</a>
-  </nav>
-  <button class="site-header__toggle" id="navToggle" aria-expanded="false" aria-label="メニューを開く">
-    <span></span><span></span>
+<!-- ============ LOADING (first visit only) ============ -->
+<div class="loading" id="loading" aria-hidden="true">
+  <svg class="loading-logo" viewBox="0 0 200 100"><path class="lp lp01" d="M57.1 62.4C52.4 70.2 43.4 77.4 31.8 82.7C33.9 84.3 35 85.5 36.1 87.4C48.9 80.3 57.9 72.2 63.6 62.4H73.5C71.5 67.2 68.8 71.4 65.3 75.5C59.9 81.7 54.6 85.9 45.7 90.7C48 92.5 48.8 93.2 50.3 95.4C54.3 92.9 56.1 91.6 58.4 89.8C62.1 86.8 67.7 81.2 70.7 77.5C74.4 73 76.9 68.7 79.6 62.4H86.3C85.9 70.2 85.2 76.6 84.1 81.6C82.8 87.6 82.1 88.4 78.1 88.4C74.6 88.4 70.9 88.1 66.2 87.3C67.4 89.6 67.9 91.3 68.2 93.8C71.3 94 74.6 94.2 76.9 94.2C83.7 94.2 86.2 93.2 88 89.6C89.8 86.1 91.6 74.7 92.4 62.9C92.6 58.9 92.7 58.3 92.9 57C90.4 57.3 88 57.4 83.1 57.4H50C52.2 54.4 53 53.1 54.6 50.1H85.2C89.6 50.1 92.6 50.2 95.1 50.5V44.2C92.9 44.6 90 44.8 85.2 44.8H42.5C37.9 44.8 35.5 44.6 33.3 44.2V50.7C35.3 50.3 38.2 50.1 42.3 50.1H48.4C44.3 58.5 37 65.2 25.2 71.2C26.8 72.4 28.1 73.9 29.3 75.7C36.5 71.5 41.5 67.6 46.1 62.4Z"/>
+<path class="lp lp02" d="M18 30.6H13.9C10.3 30.6 7.9 30.5 5.2 30.1V36.7C7.8 36.4 10.5 36.2 13.7 36.2H18V64.8C9.9 68.5 8.9 68.9 5.1 69.7L7 76.7C7.9 76.2 10.7 74.8 12.3 74.1C18.2 71.5 27.3 66.5 33.1 62.8L32.7 56.8C28.9 59.3 27.4 60.2 24.2 61.9V36.2H26.6C29.4 36.2 32 36.3 34.9 36.6V30.2C32.7 30.5 30.5 30.6 26.6 30.6H24.2V16.8C24.2 11.9 24.3 8.8 24.8 5.7H17.4C17.8 8.5 18 12 18 16.7Z"/>
+<path class="lp lp03" d="M77.1 38.2C81 38.2 84.1 38.3 86.3 38.5C86 36.7 85.9 34.2 85.9 29.6V17.1C85.9 12.5 86 10.4 86.3 7.8C83.5 8.2 80.5 8.3 75.9 8.3H49.8C45.4 8.3 43.2 8.2 40.2 7.8C40.5 10.7 40.6 12 40.6 16.6V29.6C40.6 33.4 40.5 35.9 40.2 38.6C42.4 38.3 45.2 38.2 49.3 38.2Z"/>
+<path class="lp lp04" d="M46.5 13.5H80V20.8H46.5Z"/>
+<path class="lp lp05" d="M46.5 25.7H80V33.3H46.5Z"/>
+<path class="lp lp06" d="M131.4 39.6 115.5 42.6C110.7 43.5 107.5 43.9 104.4 44L105.8 51.7C108.4 50.7 110.4 50.2 116.6 49L131.4 46.3V81.1C131.4 89.4 134.6 90.6 156.1 90.6C174.2 90.6 178.9 89.9 181.8 86.7C184.2 83.9 185.9 77.7 187.4 66.3C184.6 65.6 183.2 65 180.5 63.4C179.9 71.4 179 76.6 177.8 80C177.2 81.6 176 82.7 174.5 83.2C172 83.9 166.1 84.3 157.5 84.3C147.4 84.3 141.9 83.9 139.7 83.1C138.6 82.6 138.2 81.8 138.2 79.7V45L182 36.7C186.7 35.8 189.5 35.5 192.5 35.4L191.2 27.7C188.4 28.7 184.7 29.7 180.6 30.4L138.2 38.4V17.8C138.2 13.6 138.4 10.1 138.8 7H130.8C131.2 9.7 131.4 13.6 131.4 17.8Z"/></svg>
+</div>
+
+<!-- curtain panels revealed after loading -->
+<div class="body-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<!-- ============ HEADER (PC: left sidebar / SP: top bar) ============ -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a class="header-logo js-logo" href="#top" aria-label="場七 トップへ">
+      <svg class="logo-mark" viewBox="0 0 200 100" aria-hidden="true"><path class="lp lp01" d="M57.1 62.4C52.4 70.2 43.4 77.4 31.8 82.7C33.9 84.3 35 85.5 36.1 87.4C48.9 80.3 57.9 72.2 63.6 62.4H73.5C71.5 67.2 68.8 71.4 65.3 75.5C59.9 81.7 54.6 85.9 45.7 90.7C48 92.5 48.8 93.2 50.3 95.4C54.3 92.9 56.1 91.6 58.4 89.8C62.1 86.8 67.7 81.2 70.7 77.5C74.4 73 76.9 68.7 79.6 62.4H86.3C85.9 70.2 85.2 76.6 84.1 81.6C82.8 87.6 82.1 88.4 78.1 88.4C74.6 88.4 70.9 88.1 66.2 87.3C67.4 89.6 67.9 91.3 68.2 93.8C71.3 94 74.6 94.2 76.9 94.2C83.7 94.2 86.2 93.2 88 89.6C89.8 86.1 91.6 74.7 92.4 62.9C92.6 58.9 92.7 58.3 92.9 57C90.4 57.3 88 57.4 83.1 57.4H50C52.2 54.4 53 53.1 54.6 50.1H85.2C89.6 50.1 92.6 50.2 95.1 50.5V44.2C92.9 44.6 90 44.8 85.2 44.8H42.5C37.9 44.8 35.5 44.6 33.3 44.2V50.7C35.3 50.3 38.2 50.1 42.3 50.1H48.4C44.3 58.5 37 65.2 25.2 71.2C26.8 72.4 28.1 73.9 29.3 75.7C36.5 71.5 41.5 67.6 46.1 62.4Z"/>
+<path class="lp lp02" d="M18 30.6H13.9C10.3 30.6 7.9 30.5 5.2 30.1V36.7C7.8 36.4 10.5 36.2 13.7 36.2H18V64.8C9.9 68.5 8.9 68.9 5.1 69.7L7 76.7C7.9 76.2 10.7 74.8 12.3 74.1C18.2 71.5 27.3 66.5 33.1 62.8L32.7 56.8C28.9 59.3 27.4 60.2 24.2 61.9V36.2H26.6C29.4 36.2 32 36.3 34.9 36.6V30.2C32.7 30.5 30.5 30.6 26.6 30.6H24.2V16.8C24.2 11.9 24.3 8.8 24.8 5.7H17.4C17.8 8.5 18 12 18 16.7Z"/>
+<path class="lp lp03" d="M77.1 38.2C81 38.2 84.1 38.3 86.3 38.5C86 36.7 85.9 34.2 85.9 29.6V17.1C85.9 12.5 86 10.4 86.3 7.8C83.5 8.2 80.5 8.3 75.9 8.3H49.8C45.4 8.3 43.2 8.2 40.2 7.8C40.5 10.7 40.6 12 40.6 16.6V29.6C40.6 33.4 40.5 35.9 40.2 38.6C42.4 38.3 45.2 38.2 49.3 38.2Z"/>
+<path class="lp lp04" d="M46.5 13.5H80V20.8H46.5Z"/>
+<path class="lp lp05" d="M46.5 25.7H80V33.3H46.5Z"/>
+<path class="lp lp06" d="M131.4 39.6 115.5 42.6C110.7 43.5 107.5 43.9 104.4 44L105.8 51.7C108.4 50.7 110.4 50.2 116.6 49L131.4 46.3V81.1C131.4 89.4 134.6 90.6 156.1 90.6C174.2 90.6 178.9 89.9 181.8 86.7C184.2 83.9 185.9 77.7 187.4 66.3C184.6 65.6 183.2 65 180.5 63.4C179.9 71.4 179 76.6 177.8 80C177.2 81.6 176 82.7 174.5 83.2C172 83.9 166.1 84.3 157.5 84.3C147.4 84.3 141.9 83.9 139.7 83.1C138.6 82.6 138.2 81.8 138.2 79.7V45L182 36.7C186.7 35.8 189.5 35.5 192.5 35.4L191.2 27.7C188.4 28.7 184.7 29.7 180.6 30.4L138.2 38.4V17.8C138.2 13.6 138.4 10.1 138.8 7H130.8C131.2 9.7 131.4 13.6 131.4 17.8Z"/></svg>
+      <span class="header-logo_en">BANANA</span>
+    </a>
+
+    <nav class="menu" aria-label="メインナビゲーション">
+      <a class="menu-item" href="#about"><span>About</span><i>場七とは</i></a>
+      <a class="menu-item" href="#news"><span>News</span><i>できごと</i></a>
+      <a class="menu-item" href="#clubs"><span>Clubs</span><i>部活</i></a>
+      <a class="menu-item" href="#access"><span>Access</span><i>アクセス</i></a>
+      <a class="menu-item" href="#contact"><span>Contact</span><i>お問い合わせ</i></a>
+    </nav>
+
+    <div class="header-util">
+      <a class="header-util_ig" href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        <span>Instagram</span>
+      </a>
+      <p class="header-copy">&copy; 場七 / Banana</p>
+    </div>
+  </div>
+
+  <button class="header-button" id="navToggle" aria-expanded="false" aria-controls="menuMobile" aria-label="メニューを開く">
+    <span class="header-button_bars"></span>
+    <span class="header-button_text">MENU</span>
   </button>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="hero__media" data-img="images/hero.jpg">
-    <p class="hero__placeholder">images/hero.jpg<br><small>民家の外観 / 内観（横長・2000px以上推奨）</small></p>
+<!-- ============ SP fullscreen menu ============ -->
+<nav class="menu-mobile" id="menuMobile" aria-label="モバイルメニュー">
+  <div class="menu-mobile_inner">
+    <a href="#about"><span>About</span><i>場七とは</i></a>
+    <a href="#news"><span>News</span><i>できごと</i></a>
+    <a href="#clubs"><span>Clubs</span><i>部活</i></a>
+    <a href="#access"><span>Access</span><i>アクセス</i></a>
+    <a href="#contact"><span>Contact</span><i>お問い合わせ</i></a>
+    <a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener"><span>Instagram</span><i>@banana_iwakura</i></a>
   </div>
-  <div class="hero__inner">
-    <h1 class="hero__title">
-      <span class="hero__ja">場七</span>
-      <span class="hero__en">Banana</span>
-    </h1>
-    <p class="hero__sub">愛知県岩倉市 ／ アートスペース</p>
-  </div>
-  <div class="hero__scroll" aria-hidden="true"><span>SCROLL</span><i></i></div>
-</section>
+</nav>
 
-<!-- ============ LEAD ============ -->
-<section class="lead reveal">
-  <p class="lead__copy">岩倉の民家に、<br>月にいくつかの企みがある。</p>
-  <p class="lead__note">まずはここから</p>
-  <ul class="lead__tags">
-    <li>美術</li><li>映画</li><li>食</li><li>対話</li><li>部活</li>
-  </ul>
-</section>
+<main class="main" id="top">
 
-<!-- ============ INFORMATION ============ -->
-<section class="info reveal" aria-labelledby="info-h">
-  <h2 class="sec-label" id="info-h"><span class="sec-label__en">INFORMATION</span><span class="sec-label__ja">施設情報</span></h2>
-  <dl class="info__table">
-    <div><dt>名称</dt><dd>場七 <span class="muted">/ Banana（ばなな）</span></dd></div>
-    <div><dt>所在地</dt><dd>〒482-0005<br>愛知県岩倉市下本町下市場57-1</dd></div>
-    <div><dt>始動</dt><dd>2024年7月7日</dd></div>
-    <div><dt>機能</dt><dd>共同スタジオ ／ コミュニティスペース ／ 住居</dd></div>
-    <div><dt>アクセス</dt><dd>名鉄犬山線「岩倉」駅より徒歩5分<br><span class="muted">駐車場はありません（近隣にコインパーキング有）</span></dd></div>
-    <div><dt>開室</dt><dd>イベント開催時のみ<br><span class="muted">開催日はInstagramの月次カレンダーをご覧ください</span></dd></div>
-    <div><dt>SNS</dt><dd><a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram @banana_iwakura</a></dd></div>
-  </dl>
-</section>
-
-<!-- ============ ABOUT ============ -->
-<section class="about reveal" id="about" aria-labelledby="about-h">
-  <h2 class="sec-label" id="about-h"><span class="sec-label__en">ABOUT</span><span class="sec-label__ja">場七とは</span></h2>
-
-  <div class="about__body">
-    <p class="about__lede">場七は、愛知県岩倉市の民家を借りて運営している、共同スタジオ・コミュニティスペース・住居など複合的な機能を持つアートスペースです。</p>
-
-    <p>愛知を拠点に活動する20〜30代の作家・デザイナーが集まり、イベントを企画したり制作したりする場として、2024年7月7日に始動しました。現在は美術に限らずさまざまな専門性を持つ10名ほどが在籍しています。</p>
-
-    <p>場七が重視しているのは、個々の活動から生まれる<strong>「知識の交換」</strong>と<strong>「企画し実践する」</strong>ことの二つです。その手段として、メンバーがそれぞれ<a href="#clubs">「部活」</a>を立ち上げたり、外部に向けたトークイベントを行ったりしています。</p>
-
-    <p>また、食事や談話を通した交流の場としても日頃から使用しています。こうした活動を通して理論と実践の双方を育み、場七に関わる人々にとって有意義な場となることを模索しています。</p>
-  </div>
-
-  <!-- TODO: 名前の由来。「下市場57-1」の「場」＋「七」＝ばなな、という推測。
-       ご本人に確認が取れたら以下を有効化してください。
-  <aside class="about__origin">
-    <h3>名前のこと</h3>
-    <p>……</p>
-  </aside>
-  -->
-
-  <figure class="about__quote">
-    <blockquote><p>場七はhaziとは違いアーティストの理論と実践の場である（たぶん）。</p></blockquote>
-    <figcaption>古畑大気（Art Space &amp; Cafe Barrack）<br><span class="muted">市民ギャラリー栄 第4回 次世代アーティスト企画展 ディレクターによる紹介文より</span></figcaption>
-  </figure>
-</section>
-
-<!-- ============ CLUBS ============ -->
-<section class="clubs" id="clubs" aria-labelledby="clubs-h">
-  <div class="clubs__head reveal">
-    <h2 class="sec-label" id="clubs-h"><span class="sec-label__en">CLUBS</span><span class="sec-label__ja">部活</span></h2>
-    <p class="clubs__intro">場七では、メンバーがそれぞれ「部活」を立ち上げ、月に何度か活動しています。興味があれば誰でも参加できます。開催日はInstagramの月次カレンダーで告知しています。</p>
-  </div>
-
-  <article class="club reveal">
-    <div class="club__media" data-img="images/club-geikatsu.jpg"><p>images/club-geikatsu.jpg</p></div>
-    <div class="club__text">
-      <h3 class="club__name">芸活<span class="club__read">geikatsu</span></h3>
-      <p class="club__host">主宰 — 玉田大和</p>
-      <p>美術手帖の特集を題材にした読み合わせや、「レビューを書こう／読もう」といった実践を行っています。展覧会を実際に鑑賞したうえで各自がレビューを書き、それを持ち寄って意見を交換する回もあります。</p>
-      <p class="club__links"><a href="https://www.instagram.com/yamato.art2/" target="_blank" rel="noopener">@yamato.art2</a></p>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-thumbnail">
+      <div class="hero-thumbnail_bg"></div>
+      <div class="hero-thumbnail_img" data-img="images/hero.jpg">
+        <p class="ph">images/hero.jpg<br><small>民家の外観・内観（横長 2000px 以上推奨）</small></p>
+      </div>
     </div>
-  </article>
+    <div class="hero-scroll" aria-hidden="true"><span>SCROLL</span><i></i></div>
+  </section>
 
-  <article class="club reveal">
-    <div class="club__media" data-img="images/club-eiga.jpg"><p>images/club-eiga.jpg</p></div>
-    <div class="club__text">
-      <h3 class="club__name">場七映画倶楽部<span class="club__read">banana film club</span></h3>
-      <p class="club__host">主宰 — 森田新聞社 ／ 日比野曜</p>
-      <p>映画を探求する部活です。みんなで作品を観て感想をシェアする回、撮影会の回、短編を制作する回があります。SLOW ART CENTER NAGOYA へ月に一度「出張！場七映画倶楽部」として出向き、野外上映や講評も行っています。制作した映像作品群『パチ公』や、音MAD作品「IWAKURA」など、ジャンルを限定しない実践を続けています。</p>
-      <p class="club__links"><a href="https://www.instagram.com/morita_shinbunsha/" target="_blank" rel="noopener">@morita_shinbunsha</a><a href="https://www.instagram.com/yohibino/" target="_blank" rel="noopener">@yohibino</a></p>
-    </div>
-  </article>
+  <div class="wrapper">
 
-  <article class="club reveal">
-    <div class="club__media" data-img="images/club-udon.jpg"><p>images/club-udon.jpg</p></div>
-    <div class="club__text">
-      <h3 class="club__name">うどん生活<span class="club__read">udon seikatsu</span></h3>
-      <p class="club__host">主宰 — 森田饂飩</p>
-      <p>手打ちうどんづくりに含まれる「水回し」「踏み」「ねかせ」といったいくつもの技を生活に取り入れることで、加速していく社会に争う術を、おいしさとともに啓蒙していく活動です。年末には「年末うどん生活（別名：場七の忘年会）」を開催しています。</p>
-      <p class="club__links"><a href="https://www.instagram.com/morita_shinbunsha/" target="_blank" rel="noopener">@morita_shinbunsha</a></p>
-    </div>
-  </article>
-
-  <article class="club reveal">
-    <div class="club__media" data-img="images/club-artgym.jpg"><p>images/club-artgym.jpg</p></div>
-    <div class="club__text">
-      <h3 class="club__name">独断と偏見のアートジム<span class="club__read">art gym</span></h3>
-      <p class="club__host">インストラクター — 場七メンバー ／ 聞き手 — 森田健</p>
-      <p>鍛えてきた筋肉が異なれば、表出するものも活躍するフィールドも異なる。アートもまた同じです。メンバーが話し手（ジムインストラクター）となり、自身がこれまで培い・鍛えてきたアート観（アート筋）を自分史に沿って語ることで、参加者のアート観に新たな視点を呼び込む参加型トークイベントです。</p>
-    </div>
-  </article>
-
-  <p class="clubs__foot reveal">このほか、外部からアーティストを招いたトークイベントや、近隣のスペースとの共催企画も不定期に行っています。</p>
-</section>
-
-<!-- ============ ACCESS ============ -->
-<section class="access reveal" id="access" aria-labelledby="access-h">
-  <h2 class="sec-label" id="access-h"><span class="sec-label__en">ACCESS</span><span class="sec-label__ja">アクセス</span></h2>
-  <div class="access__grid">
-    <div class="access__text">
-      <p class="access__addr">〒482-0005<br>愛知県岩倉市下本町下市場57-1</p>
-      <ul class="access__list">
-        <li><b>電車</b>名鉄犬山線「岩倉」駅より徒歩5分</li>
-        <li><b>名古屋から</b>名鉄名古屋駅より快速特急で約11分</li>
-        <li><b>駐車場</b>ありません。近隣のコインパーキングをご利用ください</li>
+    <!-- ============ TITLE ============ -->
+    <section class="titleblock">
+      <p class="titleblock_catch">知識の交換と、企画し実践すること。</p>
+      <h1 class="titleblock_title">場七</h1>
+      <p class="titleblock_sub">愛知県岩倉市のアートスペース ／ Since 2024.7.7</p>
+      <ul class="tags" id="heroTags">
+        <li><a href="#news" data-tag="美術">美術</a></li>
+        <li><a href="#news" data-tag="映画">映画</a></li>
+        <li><a href="#news" data-tag="食">食</a></li>
+        <li><a href="#news" data-tag="対話">対話</a></li>
+        <li><a href="#news" data-tag="部活">部活</a></li>
       </ul>
-      <p class="access__note">通常は非公開の場です。イベント開催時のみ開いています。ご来場前にInstagramの月次カレンダーをご確認ください。</p>
-      <a class="btn" href="https://maps.app.goo.gl/oN6Hk7a6RVGzE8cY6" target="_blank" rel="noopener">Google マップで開く</a>
-    </div>
-    <div class="access__map">
-      <iframe
-        title="場七の地図"
-        src="https://maps.google.com/maps?q=%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B2%A9%E5%80%89%E5%B8%82%E4%B8%8B%E6%9C%AC%E7%94%BA%E4%B8%8B%E5%B8%82%E5%A0%B457-1&z=17&output=embed"
-        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+    </section>
+
+    <!-- ============ INFORMATION ============ -->
+    <section class="sec info" aria-labelledby="info-h">
+      <h2 class="heading" id="info-h">INFORMATION</h2>
+      <p class="jaHeading">施設情報</p>
+      <dl class="store_info">
+        <div><dt class="store_term">名称</dt><dd class="store_desc">場七 <span class="muted">/ Banana（ばなな）</span></dd></div>
+        <div><dt class="store_term">所在地</dt><dd class="store_desc">〒482-0005<br>愛知県岩倉市下本町下市場57-1</dd></div>
+        <div><dt class="store_term">始動</dt><dd class="store_desc">2024年7月7日</dd></div>
+        <div><dt class="store_term">機能</dt><dd class="store_desc">共同スタジオ ／ コミュニティスペース ／ 住居</dd></div>
+        <div><dt class="store_term">アクセス</dt><dd class="store_desc">名鉄犬山線「岩倉」駅より徒歩5分<br><span class="muted">駐車場はありません（近隣にコインパーキング有）</span></dd></div>
+        <div><dt class="store_term">開室</dt><dd class="store_desc">イベント開催時のみ<br><span class="muted">開催日はInstagramの月次カレンダーをご覧ください</span></dd></div>
+        <div><dt class="store_term">SNS</dt><dd class="store_desc"><a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram @banana_iwakura</a></dd></div>
+      </dl>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="sec about" id="about" aria-labelledby="about-h">
+      <h2 class="heading" id="about-h">ABOUT</h2>
+      <p class="jaHeading">場七とは</p>
+
+      <div class="about-body">
+        <p class="about-lede">場七は、愛知県岩倉市の民家を借りて運営している、共同スタジオ・コミュニティスペース・住居など複合的な機能を持つアートスペースです。</p>
+
+        <p>愛知を拠点に活動する20〜30代の作家・デザイナーが集まり、イベントを企画したり制作したりする場として、2024年7月7日に始動しました。現在は美術に限らずさまざまな専門性を持つ10名ほどが在籍しています。</p>
+
+        <p>場七が重視しているのは、個々の活動から生まれる<strong>「知識の交換」</strong>と<strong>「企画し実践する」</strong>ことの二つです。その手段として、メンバーがそれぞれ<a href="#clubs">「部活」</a>を立ち上げたり、外部に向けたトークイベントを行ったりしています。</p>
+
+        <p>また、食事や談話を通した交流の場としても日頃から使用しています。こうした活動を通して理論と実践の双方を育み、場七に関わる人々にとって有意義な場となることを模索しています。</p>
+      </div>
+
+      <!-- TODO: 名前の由来。「下市場57-1」の「場」＋「七」＝ばなな、という推測。
+           ご本人に確認が取れたら以下を有効化してください。
+      <div class="about-origin">
+        <h3>名前のこと</h3>
+        <p>……</p>
+      </div>
+      -->
+
+      <figure class="quote">
+        <blockquote><p>場七はhaziとは違いアーティストの理論と実践の場である（たぶん）。</p></blockquote>
+        <figcaption>古畑大気（Art Space &amp; Cafe Barrack）<br><span class="muted">市民ギャラリー栄 第4回 次世代アーティスト企画展 ディレクターによる紹介文より</span></figcaption>
+      </figure>
+    </section>
+
+    <!-- ============ NEWS ============ -->
+    <section class="sec news" id="news" aria-labelledby="news-h">
+      <h2 class="heading" id="news-h">NEWS</h2>
+      <p class="jaHeading">できごと</p>
+
+      <div class="news-filter" role="group" aria-label="タグで絞り込む">
+        <button class="filter-pill is-active" data-filter="all">すべて</button>
+        <button class="filter-pill" data-filter="美術">美術</button>
+        <button class="filter-pill" data-filter="映画">映画</button>
+        <button class="filter-pill" data-filter="食">食</button>
+        <button class="filter-pill" data-filter="対話">対話</button>
+        <button class="filter-pill" data-filter="部活">部活</button>
+      </div>
+
+      <div class="cards_list" id="newsList">
+
+        <article class="card" data-tags="食 対話 部活">
+          <a href="https://www.instagram.com/p/DcB9NBppEHb/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>08</span></div>
+            <p class="card_date">2026.08.17</p>
+            <p class="card_category">設立2周年、これからの場七を話す夜</p>
+            <h3 class="card_title">場七 設立2周年記念イベント</h3>
+            <p class="card_excerpt">帰省した設立者・玉田大和を囲み、日比野曜がつくる名古屋めしを食べながら、これからの場七について話す会を開きました。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="映画 対話">
+          <a href="https://www.instagram.com/p/DcFR_ovmd_f/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>08</span></div>
+            <p class="card_date">2026.08.15</p>
+            <p class="card_category">みなさんの幸せって何ですか？</p>
+            <h3 class="card_title">『ぼけますから、よろしくお願いします。』上映会 開催報告</h3>
+            <p class="card_excerpt">全4回の上映に計56名が来場。上映後のトークセッションでは、ユマニチュードの「リスペクト」を試みるワークを行いました。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="映画 対話">
+          <a href="https://www.instagram.com/p/DbiiJ0qBiqz/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>08</span></div>
+            <p class="card_date">2026.08.08</p>
+            <p class="card_category">場七映画倶楽部 × コミュニティカフェかがよひ</p>
+            <h3 class="card_title">映画『急に具合が悪くなる』公開記念 上映会＆トークセッション</h3>
+            <p class="card_excerpt">会場はコミュニティカフェかがよひ（岩倉市昭和町・おさや糸店2階）。チラシデザインは森田健。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="美術">
+          <a href="https://www.instagram.com/p/DWWKOxIE4wB/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>03</span></div>
+            <p class="card_date">2026.03.27 – 04.05</p>
+            <p class="card_category">桜まつりの人の流れに、作品を差し込む</p>
+            <h3 class="card_title">ハジとバナナの売店 in つばめ堂</h3>
+            <p class="card_excerpt">岩倉桜まつりに合わせ、つばめ堂の一角を借りた期間限定の売店。運営：Project Space hazi／主催：岩倉まちなみ研究会。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="映画 部活">
+          <a href="https://www.instagram.com/p/DTvMJUgkSU6/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>01</span></div>
+            <p class="card_date">2026.01.21</p>
+            <p class="card_category">街で拾った音から、音MADをつくる</p>
+            <h3 class="card_title">出張！場七映画倶楽部「音MADをつくろう」制作編</h3>
+            <p class="card_excerpt">SLOW ART CENTER NAGOYA のミュージッククラブとのコラボ回。岩倉と栄で素材を集め、「IWAKURA」という音MADを制作。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="部活 美術 映画">
+          <a href="https://www.instagram.com/p/DTLC3FhkRDw/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2026<br>01</span></div>
+            <p class="card_date">2026.01.06</p>
+            <p class="card_category">今月、場七で起きること</p>
+            <h3 class="card_title">2026年1月のイベントカレンダー</h3>
+            <p class="card_excerpt">芸活「レビューを書こう」、映画倶楽部の音MAD連続企画など、月内5件の部活動を公開。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="食 部活">
+          <a href="https://www.instagram.com/p/DSwFi5CkR_h/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>12</span></div>
+            <p class="card_date">2025.12.28</p>
+            <p class="card_category">加速する社会に、うどんで争う</p>
+            <h3 class="card_title">年末うどん生活（別名：場七の忘年会）</h3>
+            <p class="card_excerpt">14時からうどんを捏ね、映画鑑賞と無言の読書時間を挟んで19時に実食。夜にはゲストによる「ボブバー」も開店。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="対話 部活">
+          <a href="https://www.instagram.com/p/DSkFtdJkp_Y/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>12</span></div>
+            <p class="card_date">2025.12.22</p>
+            <p class="card_category">アート筋を、自分史に沿って語る</p>
+            <h3 class="card_title">独断と偏見のアートジム 第5回 開催報告</h3>
+            <p class="card_excerpt">話し手はWEBアプリデザイナーの益田朱梨、聞き手は森田健。会社員・フリーランスとしての経験から価値観の形成までを語りました。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="美術 部活">
+          <a href="https://www.instagram.com/p/DSPkX07EaEN/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>12</span></div>
+            <p class="card_date">2025.12.15</p>
+            <p class="card_category">美術手帖を、みんなで読む</p>
+            <h3 class="card_title">芸活「韓国現代美術特集」</h3>
+            <p class="card_excerpt">美術手帖2026年1月号を題材にした読み合わせの回。主催は玉田大和。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="映画 部活">
+          <a href="https://www.instagram.com/p/DR4FwP_EmdK/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>12</span></div>
+            <p class="card_date">2025.12.10</p>
+            <p class="card_category">表に出ないインターネット文化を、映像表現として見る</p>
+            <h3 class="card_title">出張！場七映画倶楽部「音MADをつくろう」座学編</h3>
+            <p class="card_excerpt">「素材」という概念と編集方法に着目した初回。会場は SLOW ART CENTER NAGOYA。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="対話 美術">
+          <a href="https://www.instagram.com/p/DRHi2qGEUtd/" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>11</span></div>
+            <p class="card_date">2025.11.28</p>
+            <p class="card_category">個人と集団の活動を、両立するということ</p>
+            <h3 class="card_title">トークイベント「スローイング」</h3>
+            <p class="card_excerpt">京都から大澤一太・中井梓太郎を招聘。進行は玉田大和。ユニット「スローイング・スパゲッティ」での活動について伺いました。</p>
+          </a>
+        </article>
+
+        <article class="card" data-tags="美術">
+          <a href="https://www.bunka758.or.jp/event/sakae/details/_4_project_space_hazibanana.html" target="_blank" rel="noopener">
+            <div class="card_thumbnail"><span class="ph">2025<br>07</span></div>
+            <p class="card_date">2025.07.08 – 07.27</p>
+            <p class="card_category">斑点である我々を結ぶ</p>
+            <h3 class="card_title">市民ギャラリー栄 第4回 次世代アーティスト企画展 場七「斑点を結ぶ」</h3>
+            <p class="card_excerpt">Project Space hazi との2館企画。ディレクションは Art Space &amp; Cafe Barrack。会期中は上映会・ワークショップ・座談会も開催。</p>
+          </a>
+        </article>
+
+      </div>
+
+      <p class="news-empty" id="newsEmpty" hidden>該当するできごとがありません。</p>
+
+      <p class="news-note">最新の開催情報は Instagram の月次カレンダーで告知しています。</p>
+      <div class="button">
+        <a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram を見る</a>
+      </div>
+    </section>
+
+    <!-- ============ CLUBS ============ -->
+    <section class="sec clubs" id="clubs" aria-labelledby="clubs-h">
+      <h2 class="heading" id="clubs-h">CLUBS</h2>
+      <p class="jaHeading">部活</p>
+      <p class="clubs-intro">場七では、メンバーがそれぞれ「部活」を立ち上げ、月に何度か活動しています。興味があれば誰でも参加できます。開催日はInstagramの月次カレンダーで告知しています。</p>
+
+      <article class="club">
+        <div class="club_media" data-img="images/club-geikatsu.jpg"><p class="ph">images/club-geikatsu.jpg</p></div>
+        <div class="club_text">
+          <p class="club_no">CLUB 01</p>
+          <h3 class="club_name">芸活</h3>
+          <p class="club_host">主宰 — 玉田大和</p>
+          <p>美術手帖の特集を題材にした読み合わせや、「レビューを書こう／読もう」といった実践を行っています。展覧会を実際に鑑賞したうえで各自がレビューを書き、それを持ち寄って意見を交換する回もあります。</p>
+          <p class="club_links"><a href="https://www.instagram.com/yamato.art2/" target="_blank" rel="noopener">@yamato.art2</a></p>
+        </div>
+      </article>
+
+      <article class="club">
+        <div class="club_media" data-img="images/club-eiga.jpg"><p class="ph">images/club-eiga.jpg</p></div>
+        <div class="club_text">
+          <p class="club_no">CLUB 02</p>
+          <h3 class="club_name">場七映画倶楽部</h3>
+          <p class="club_host">主宰 — 森田新聞社 ／ 日比野曜</p>
+          <p>映画を探求する部活です。みんなで作品を観て感想をシェアする回、撮影会の回、短編を制作する回があります。SLOW ART CENTER NAGOYA へ月に一度「出張！場七映画倶楽部」として出向き、野外上映や講評も行っています。制作した映像作品群『パチ公』や、音MAD作品「IWAKURA」など、ジャンルを限定しない実践を続けています。</p>
+          <p class="club_links"><a href="https://www.instagram.com/morita_shinbunsha/" target="_blank" rel="noopener">@morita_shinbunsha</a><a href="https://www.instagram.com/yohibino/" target="_blank" rel="noopener">@yohibino</a></p>
+        </div>
+      </article>
+
+      <article class="club">
+        <div class="club_media" data-img="images/club-udon.jpg"><p class="ph">images/club-udon.jpg</p></div>
+        <div class="club_text">
+          <p class="club_no">CLUB 03</p>
+          <h3 class="club_name">うどん生活</h3>
+          <p class="club_host">主宰 — 森田饂飩</p>
+          <p>手打ちうどんづくりに含まれる「水回し」「踏み」「ねかせ」といったいくつもの技を生活に取り入れることで、加速していく社会に争う術を、おいしさとともに啓蒙していく活動です。年末には「年末うどん生活（別名：場七の忘年会）」を開催しています。</p>
+          <p class="club_links"><a href="https://www.instagram.com/morita_shinbunsha/" target="_blank" rel="noopener">@morita_shinbunsha</a></p>
+        </div>
+      </article>
+
+      <article class="club">
+        <div class="club_media" data-img="images/club-artgym.jpg"><p class="ph">images/club-artgym.jpg</p></div>
+        <div class="club_text">
+          <p class="club_no">CLUB 04</p>
+          <h3 class="club_name">独断と偏見のアートジム</h3>
+          <p class="club_host">インストラクター — 場七メンバー ／ 聞き手 — 森田健</p>
+          <p>鍛えてきた筋肉が異なれば、表出するものも活躍するフィールドも異なる。アートもまた同じです。メンバーが話し手（ジムインストラクター）となり、自身がこれまで培い・鍛えてきたアート観（アート筋）を自分史に沿って語ることで、参加者のアート観に新たな視点を呼び込む参加型トークイベントです。</p>
+        </div>
+      </article>
+
+      <p class="clubs-foot">このほか、外部からアーティストを招いたトークイベントや、近隣のスペースとの共催企画も不定期に行っています。</p>
+    </section>
+
+    <!-- ============================================================
+         PEOPLE（雛形・本人の掲載許諾が取れたら有効化）
+         必要な情報：氏名 / ローマ字表記 / 肩書き / 顔写真(正方形) /
+                     所属リンク(任意) / 場七メンバーか外部の協力者か
+         リングの色分け：.is-member = 黄（場七メンバー）/ 既定 = グレー（外部）
+         写真は images/people/ に「ローマ字名.jpg」で配置してください。
+
+    <section class="sec people" id="people" aria-labelledby="people-h">
+      <h2 class="heading" id="people-h">PEOPLE</h2>
+      <p class="jaHeading">携わる人たち</p>
+      <div class="people-list">
+
+        <article class="people-person">
+          <a href="https://www.instagram.com/yamato.art2/" target="_blank" rel="noopener">
+            <div class="people-person_thumbnail is-member"><img src="images/people/yamato-tamada.jpg" alt=""></div>
+            <div>
+              <p class="people-person_name">玉田大和</p>
+              <p class="people-person_romaji">Yamato Tamada</p>
+              <p class="people-person_title">設立者 / アーティスト</p>
+            </div>
+          </a>
+        </article>
+
+        （以下、同じブロックを人数分くりかえす）
+
+      </div>
+    </section>
+    ============================================================ -->
+
+    <!-- ============ ACCESS ============ -->
+    <section class="sec access" id="access" aria-labelledby="access-h">
+      <h2 class="heading" id="access-h">ACCESS</h2>
+      <p class="jaHeading">アクセス</p>
+      <div class="access-grid">
+        <div class="access-text">
+          <p class="access-addr">〒482-0005<br>愛知県岩倉市下本町下市場57-1</p>
+          <ul class="access-list">
+            <li><b>電車</b>名鉄犬山線「岩倉」駅より徒歩5分</li>
+            <li><b>名古屋から</b>名鉄名古屋駅より快速特急で約11分</li>
+            <li><b>駐車場</b>ありません。近隣のコインパーキングをご利用ください</li>
+          </ul>
+          <p class="access-note">通常は非公開の場です。イベント開催時のみ開いています。ご来場前にInstagramの月次カレンダーをご確認ください。</p>
+          <div class="button">
+            <a href="https://maps.app.goo.gl/oN6Hk7a6RVGzE8cY6" target="_blank" rel="noopener">Google マップで開く</a>
+          </div>
+        </div>
+        <div class="access-map">
+          <iframe
+            title="場七の地図"
+            src="https://maps.google.com/maps?q=%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B2%A9%E5%80%89%E5%B8%82%E4%B8%8B%E6%9C%AC%E7%94%BA%E4%B8%8B%E5%B8%82%E5%A0%B457-1&z=17&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="sec contact" id="contact" aria-labelledby="contact-h">
+      <h2 class="heading" id="contact-h">CONTACT</h2>
+      <p class="jaHeading">お問い合わせ</p>
+      <p class="contact-lead">イベントへの参加、取材、企画のご相談などは Instagram の DM へお願いします。</p>
+      <div class="moreButton">
+        <a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">DM</a>
+      </div>
+      <!-- TODO: 代表メールアドレスが決まったら以下を有効化
+      <p class="contact-mail">Mail — <a href="mailto:xxx@example.com">xxx@example.com</a></p>
+      -->
+    </section>
+
   </div>
-</section>
+</main>
 
-<!-- ============ CONTACT ============ -->
-<section class="contact reveal" id="contact" aria-labelledby="contact-h">
-  <h2 class="sec-label" id="contact-h"><span class="sec-label__en">CONTACT</span><span class="sec-label__ja">お問い合わせ</span></h2>
-  <p class="contact__lead">イベントへの参加、取材、企画のご相談などは Instagram の DM へお願いします。</p>
-  <a class="btn btn--lg" href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram @banana_iwakura</a>
-  <!-- TODO: 代表メールアドレスが決まったら以下を有効化
-  <p class="contact__mail">Mail — <a href="mailto:xxx@example.com">xxx@example.com</a></p>
-  -->
-</section>
-
-<footer class="site-footer">
-  <p class="site-footer__logo">場七 <span>/ Banana</span></p>
-  <p class="site-footer__addr">〒482-0005 愛知県岩倉市下本町下市場57-1</p>
-  <nav class="site-footer__nav">
-    <a href="#about">About</a><a href="#clubs">部活</a><a href="#access">Access</a><a href="#contact">Contact</a>
-    <a href="https://www.instagram.com/banana_iwakura/" target="_blank" rel="noopener">Instagram</a>
-  </nav>
-  <p class="site-footer__copy">&copy; 場七 / Banana</p>
+<footer class="footer">
+  <p class="footer-logo">場七<span>/ Banana</span></p>
+  <p class="footer-addr">〒482-0005 愛知県岩倉市下本町下市場57-1</p>
+  <p class="footer-copy">&copy; 場七 / Banana</p>
 </footer>
 
-<script src="assets/main.js"></script>
+<!-- ============ SP bottom navigation ============ -->
+<nav class="navigation-mobile" aria-label="クイックナビゲーション">
+  <a class="navigation-item" href="#about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.1"/></svg><span>About</span></a>
+  <a class="navigation-item" href="#news"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H5a1 1 0 0 1-1-1Z"/><path d="M17 9h3v8a2 2 0 0 1-3 0Z"/><path d="M7 9h7M7 13h7"/></svg><span>News</span></a>
+  <a class="navigation-item" href="#clubs"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h9l5 5v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M15 4v5h5"/></svg><span>Clubs</span></a>
+  <a class="navigation-item" href="#access"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg><span>Access</span></a>
+  <a class="navigation-item" href="#contact"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg><span>Contact</span></a>
+</nav>
+
+<script src="assets/main.js?v=5"></script>
 </body>
 </html>
