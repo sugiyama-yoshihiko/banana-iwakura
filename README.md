@@ -3,8 +3,8 @@
 愛知県岩倉市のアートスペース「場七 / Banana」の公式サイト。
 ビルド不要の静的HTML（フレームワーク・依存パッケージなし）で、GitHub Pages にホスティングします。
 
-- 公開中（共有用）: https://sugiyama-yoshihiko.github.io/banana-iwakura/
-- 本番予定: https://banana-iwakura.com （ドメイン未取得）
+- 本番: https://banana-iwakura.com
+- 共有用（旧）: https://sugiyama-yoshihiko.github.io/banana-iwakura/ → 本番へリダイレクト
 - Instagram: https://www.instagram.com/banana_iwakura/
 
 ## 構成
