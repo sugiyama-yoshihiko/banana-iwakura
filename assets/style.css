@@ -84,6 +84,18 @@ strong{font-weight:700}
 .loading-logo{width:150px; height:auto}
 .loading-logo .lp{fill:none; stroke:#fff; stroke-width:.7px}
 
+
+/* カーテン：3枚を「重ねて」置く。横に並べると、右端のパネルが動いた
+   瞬間に右側だけ先にサイトが露出してしまうため（実際に起きた不具合）。 */
+.body-bg{position:fixed; inset:0; z-index:98; pointer-events:none}
+.body-bg span{position:absolute; inset:0; display:block; will-change:transform}
+.body-bg span:nth-child(1){background:rgba(0,0,0,.9)}
+.body-bg span:nth-child(2){background:var(--ink)}
+.body-bg span:nth-child(3){background:var(--charcoal)}  /* 最前面＝ローディングと同色 */
+.body-bg.is-done{display:none}
+
+.card_thumbnail.has-img .ph{display:none}
+
 /* ============================================================
    HEADER
    ============================================================ */

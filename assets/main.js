@@ -9,16 +9,39 @@
      初回のみ（sessionStorage で判定）
      ============================================================ */
   var loading = document.getElementById('loading');
+  var bodyBg = document.querySelector('.body-bg');
   var header = document.getElementById('header');
 
-  function revealSite(delay) {
-    // サイドバーを滑り込ませる
+  /* カーテンを開く。
+     ・3枚は「重ねて」置く（横並びだと、動いた瞬間に隙間からサイトが覗く）
+     ・最前面（span3）から順に右へ抜く。
+       左へ抜くとパネルの後端が左へ去るので【右側から】露出してしまう。
+       右へ抜けば左端から順に現れ、視線の流れとサイドバーの出現方向に揃う。
+     ・1枚抜けても下に次の面があるため、最後の1枚が抜けきるまでサイトは見えない。 */
+  function revealSite(delay, instant) {
+    var panels = bodyBg ? [].slice.call(bodyBg.querySelectorAll('span')).reverse() : [];
+
+    if (instant) {
+      if (bodyBg) bodyBg.classList.add('is-done');
+      if (header) header.classList.add('is-in');
+      return;
+    }
+
+    panels.forEach(function (p, i) {
+      p.style.transition = 'transform .8s ' + EASE;
+      setTimeout(function () { p.style.transform = 'translateX(100%)'; }, delay + i * 110);
+    });
+    setTimeout(function () {
+      if (bodyBg) bodyBg.classList.add('is-done');
+    }, delay + panels.length * 110 + 900);
+
+    // サイドバーは最後の1枚が抜けきる頃に合わせて出す
     setTimeout(function () {
       if (header) {
         header.style.transition = 'transform .8s ' + EASE;
         header.classList.add('is-in');
       }
-    }, delay);
+    }, delay + panels.length * 110 + 200);
   }
 
   function hideLoading() {
@@ -36,8 +59,7 @@
     // 2回目以降 / モーション低減設定 → 即表示
     if (seen || reduceMotion || !paths.length) {
       hideLoading();
-      revealSite(0);
-      if (!header) return;
+      revealSite(0, true);   // 2回目以降は演出なしで即表示
       return;
     }
 
@@ -85,9 +107,12 @@
     if (started) return;
     started = true;
     document.body.classList.remove('preload');
-    requestAnimationFrame(function () {
-      requestAnimationFrame(runLoading);
-    });
+    // rAF はバックグラウンドタブでは発火しない。演出が始まらずローディングが
+    // 居座るのを避けるため、タイマー側のフォールバックも張る。
+    var fired = false;
+    var go = function () { if (fired) return; fired = true; runLoading(); };
+    requestAnimationFrame(function () { requestAnimationFrame(go); });
+    setTimeout(go, 120);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

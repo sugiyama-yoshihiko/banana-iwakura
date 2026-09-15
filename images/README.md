@@ -22,3 +22,14 @@
 ```bash
 sips -Z 2400 -s format jpeg -s formatOptions 80 hero.jpg --out hero.jpg
 ```
+
+## NEWS の写真
+
+`images/news/` に `news-YYYY-MM-DD.jpg` の名前で置き、`index.html` の該当カードの
+`<div class="card_thumbnail" data-img="images/news/news-YYYY-MM-DD.jpg">` で紐づけます。
+
+現在入っているのは、場七自身のInstagram投稿から取得した7件です。
+残り5件（2026.08.17 / 2026.03.27 / 2025.12.22 / 2025.12.10 / 2025.07.08）は
+**他アカウントの投稿**のため、写真は入れていません。
+掲載するには各アカウント（@yohibino、@hazi_iwakura、@catcher_of_cats、
+@slowartcenternagoya、市民ギャラリー栄）の許諾が必要です。
