@@ -9,27 +9,16 @@
      初回のみ（sessionStorage で判定）
      ============================================================ */
   var loading = document.getElementById('loading');
-  var bodyBg = document.querySelector('.body-bg');
   var header = document.getElementById('header');
 
   function revealSite(delay) {
-    // カーテンを左から順に開く
-    var panels = bodyBg ? bodyBg.querySelectorAll('span') : [];
-    panels.forEach(function (p, i) {
-      p.style.transition = 'transform .75s ' + EASE;
-      setTimeout(function () { p.style.transform = 'translateX(-101%)'; }, delay + i * 60);
-    });
-    setTimeout(function () {
-      if (bodyBg) bodyBg.classList.add('is-done');
-    }, delay + 900);
-
     // サイドバーを滑り込ませる
     setTimeout(function () {
       if (header) {
         header.style.transition = 'transform .8s ' + EASE;
         header.classList.add('is-in');
       }
-    }, delay + 120);
+    }, delay);
   }
 
   function hideLoading() {

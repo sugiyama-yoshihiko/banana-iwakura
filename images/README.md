@@ -9,6 +9,7 @@
 | `club-geikatsu.jpg` | 芸活 | 1600×1200 程度（4:3） |
 | `club-eiga.jpg` | 場七映画倶楽部 | 4:3 |
 | `club-udon.jpg` | うどん生活 | 4:3 |
+| `club-tougei.jpg` | 場七陶芸部（配置済み） | 4:3 |
 | `club-artgym.jpg` | 独断と偏見のアートジム | 4:3 |
 | `ogp.jpg` | SNSシェア時のサムネイル | 1200×630 |
 

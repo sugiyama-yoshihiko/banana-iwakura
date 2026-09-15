@@ -84,14 +84,6 @@ strong{font-weight:700}
 .loading-logo{width:150px; height:auto}
 .loading-logo .lp{fill:none; stroke:#fff; stroke-width:.7px}
 
-/* カーテン（ローディング後に開く3枚） */
-.body-bg{position:fixed; inset:0; z-index:98; pointer-events:none; display:flex}
-.body-bg span{flex:1; height:100%; transform:translateX(0)}
-.body-bg span:nth-child(1){background:rgba(0,0,0,.9)}
-.body-bg span:nth-child(2){background:var(--ink)}
-.body-bg span:nth-child(3){background:var(--charcoal)}
-.body-bg.is-done{display:none}
-
 /* ============================================================
    HEADER
    ============================================================ */
